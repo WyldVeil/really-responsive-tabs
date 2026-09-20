@@ -1,7 +1,7 @@
-# Auto horizontal tabs when narrow - A firefox extension
-
-Vertical tabs when the browser window is wide, horizontal tabs when it is
-narrow. Switches automatically as you resize, snap or maximise the window.
+# Really Responsive Tabs
+Firefox and Waterfox tabs that respond to the window size: vertical tabs when
+the window is wide, horizontal tabs when it is narrow. Switches automatically
+as you resize, snap or maximise the window.
 Works in Firefox, Waterfox and LibreWolf on Linux, Windows and macOS.
 
 ## Why
@@ -59,16 +59,16 @@ preferences.
 **Linux and macOS**
 
 ```
-git clone https://github.com/WyldVeil/auto-horizontal-tabs-when-narrow
-cd auto-horizontal-tabs-when-narrow
+git clone https://github.com/WyldVeil/really-responsive-tabs
+cd really-responsive-tabs
 ./install.sh            # finds the browser, or pass the directory: ./install.sh /opt/waterfox
 ```
 
 **Windows** (elevated PowerShell)
 
 ```
-git clone https://github.com/WyldVeil/auto-horizontal-tabs-when-narrow
-cd auto-horizontal-tabs-when-narrow
+git clone https://github.com/WyldVeil/really-responsive-tabs
+cd really-responsive-tabs
 .\install.ps1           # or: .\install.ps1 "C:\Program Files\Mozilla Firefox"
 ```
 

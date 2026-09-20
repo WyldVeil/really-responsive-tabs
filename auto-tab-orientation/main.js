@@ -15,7 +15,7 @@
 "use strict";
 
 const VERSION = "1.0.0";
-const HOMEPAGE = "https://github.com/WyldVeil/auto-horizontal-tabs-when-narrow";
+const HOMEPAGE = "https://github.com/WyldVeil/really-responsive-tabs";
 const CHROME = "chrome://auto-tab-orientation/content/";
 
 const BRANCH = "autoTabOrientation.";
