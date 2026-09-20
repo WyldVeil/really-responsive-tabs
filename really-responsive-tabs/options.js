@@ -15,6 +15,7 @@
     const s = api.get();
     $("enabled").checked = s.enabled;
     $("showButton").checked = s.showButton;
+    $("hideLauncher").checked = s.hideLauncher;
     document.querySelector(`input[name=mode][value="${s.mode}"]`).checked = true;
     $("widthRange").value = $("widthPercent").value = s.widthPercent;
     $("heightRange").value = $("heightPercent").value = s.heightPercent;
@@ -31,6 +32,7 @@
 
   $("enabled").addEventListener("change", (e) => { api.set("enabled", e.target.checked); load(); });
   $("showButton").addEventListener("change", (e) => { api.set("showButton", e.target.checked); });
+  $("hideLauncher").addEventListener("change", (e) => { api.set("hideLauncher", e.target.checked); });
   for (const r of document.querySelectorAll("input[name=mode]")) {
     r.addEventListener("change", (e) => { api.set("mode", e.target.value); load(); });
   }

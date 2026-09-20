@@ -26,6 +26,7 @@ const P = {
   heightPercent: BRANCH + "heightPercent",
   slack: BRANCH + "slack",
   showButton: BRANCH + "showToolbarButton",
+  hideLauncher: BRANCH + "hideLauncherWhenHorizontal",
 };
 const VERTICAL = "sidebar.verticalTabs";
 const REVAMP = "sidebar.revamp";
@@ -43,6 +44,7 @@ const MENU_ID = "really-responsive-tabs-menuitem";
   d.setIntPref(P.heightPercent, 50);
   d.setIntPref(P.slack, 8);
   d.setBoolPref(P.showButton, true);
+  d.setBoolPref(P.hideLauncher, true);
 }
 
 const settings = {
@@ -52,6 +54,7 @@ const settings = {
   get heightPercent() { return clamp(Services.prefs.getIntPref(P.heightPercent), 1, 100); },
   get slack() { return clamp(Services.prefs.getIntPref(P.slack), 0, 500); },
   get showButton() { return Services.prefs.getBoolPref(P.showButton); },
+  get hideLauncher() { return Services.prefs.getBoolPref(P.hideLauncher); },
 };
 
 function clamp(v, lo, hi) {
@@ -88,6 +91,28 @@ function setVertical(v) {
     Services.prefs.setBoolPref(VERTICAL, v);
   } finally {
     writing = false;
+  }
+  for (const win of Services.wm.getEnumerator("navigator:browser")) {
+    adjustLauncher(win, v);
+  }
+}
+
+// The sidebar launcher (the icon strip the vertical tabs live in) is
+// per-window state, not a pref, and Firefox leaves it showing when the tabs
+// move out of it. Hide it with the tabs, and make sure it is back for
+// vertical mode, where it holds the tab strip.
+function adjustLauncher(win, vertical) {
+  const sc = win.SidebarController;
+  if (!sc || !sc._state || sc.inSingleTabWindow) return;
+  try {
+    if (vertical) {
+      if (!sc._state.launcherVisible) sc._state.updateVisibility(true, true);
+    } else if (settings.hideLauncher && sc._state.launcherVisible) {
+      sc._state.updateVisibility(false);
+      if (sc.isOpen) sc.hide({ dismissPanel: false });
+    }
+  } catch (e) {
+    Cu.reportError("really-responsive-tabs: launcher toggle failed: " + e);
   }
 }
 
@@ -206,6 +231,7 @@ const api = {
     heightPercent: settings.heightPercent,
     slack: settings.slack,
     showButton: settings.showButton,
+    hideLauncher: settings.hideLauncher,
   }),
   set(key, value) {
     const name = P[key];
@@ -242,7 +268,7 @@ function openOptions(win) {
     return;
   }
   win.openDialog(CHROME + "options.html", "really-responsive-tabs-options",
-    "chrome,dialog=no,centerscreen,resizable=yes,width=520,height=560", api);
+    "chrome,dialog=no,centerscreen,resizable=yes,width=540,height=720", api);
 }
 
 // ---- per-window wiring ------------------------------------------------------

@@ -5,6 +5,13 @@ the window is wide, horizontal tabs when it is narrow. Switches automatically
 as you resize, snap or maximise the window.
 Works in Firefox, Waterfox and LibreWolf on Linux, Windows and macOS.
 
+![Full screen with vertical tabs, half screen with horizontal tabs](screenshots/overview.png)
+
+The black area is a 2560 x 1440 desktop. Full screen and a large floating
+window get vertical tabs; either half of the screen, or a small window, gets
+horizontal tabs and the sidebar strip goes with them. More in
+[screenshots/](screenshots/).
+
 ## Why
 
 I noticed that when using half screen for Firefox/Waterfox, web page real
@@ -39,10 +46,14 @@ Plus:
   counts as half once the window manager's borders and gaps are taken off.
 - If you flip the orientation by hand it stays that way until the window next
   crosses the threshold, so a manual choice is respected instead of fought.
+- The sidebar icon strip goes away with the tabs (optional), so horizontal
+  mode really does give the whole width back to the page.
 - A toolbar button (can be hidden) and a Tools menu entry that open the
   settings. All settings apply immediately.
 - Multiple monitors are fine: each window is measured against the screen it
   is on.
+
+![Settings window](screenshots/6-settings.png)
 
 ## Install
 
@@ -115,6 +126,7 @@ edited there as well as in the settings window.
 | `heightPercent` | `50` | Short mode: go vertical at or below this share of the screen's height. |
 | `slack` | `8` | Pixels of tolerance added to the threshold. |
 | `showToolbarButton` | `true` | Show the toolbar button. |
+| `hideLauncherWhenHorizontal` | `true` | Hide the sidebar icon strip along with the tabs; it comes back with vertical mode. |
 
 ## How it works
 
