@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Installs Auto Tab Orientation into a Firefox-family application directory.
+# Installs Really Responsive Tabs into a Firefox-family application directory.
 # Usage: ./install.sh [app dir]      e.g. ./install.sh /opt/waterfox
 # With no argument it looks in the usual places and asks if it finds several.
 set -euo pipefail
@@ -38,20 +38,20 @@ sudo=""
 [ -w "$app" ] || sudo="sudo"
 
 existing="$app/defaults/pref/autoconfig.js"
-if [ -f "$existing" ] && ! grep -q "auto-tab-orientation.cfg" "$existing"; then
+if [ -f "$existing" ] && ! grep -q "really-responsive-tabs.cfg" "$existing"; then
   echo "There is already an autoconfig loader at $existing pointing somewhere else." >&2
   echo "Only one general.config.filename can be active. To keep both, add these lines to your existing .cfg:" >&2
   echo >&2
-  sed -n '/^try {/,$p' "$here/auto-tab-orientation.cfg" >&2
+  sed -n '/^try {/,$p' "$here/really-responsive-tabs.cfg" >&2
   echo >&2
-  echo "and copy the auto-tab-orientation/ directory into $app yourself. Nothing was changed." >&2
+  echo "and copy the really-responsive-tabs/ directory into $app yourself. Nothing was changed." >&2
   exit 2
 fi
 
-$sudo mkdir -p "$app/defaults/pref" "$app/auto-tab-orientation"
+$sudo mkdir -p "$app/defaults/pref" "$app/really-responsive-tabs"
 $sudo cp "$here/autoconfig.js" "$app/defaults/pref/autoconfig.js"
-$sudo cp "$here/auto-tab-orientation.cfg" "$app/auto-tab-orientation.cfg"
-$sudo cp "$here"/auto-tab-orientation/* "$app/auto-tab-orientation/"
-$sudo chmod -R a+rX "$app/auto-tab-orientation" "$app/auto-tab-orientation.cfg" "$app/defaults/pref/autoconfig.js"
+$sudo cp "$here/really-responsive-tabs.cfg" "$app/really-responsive-tabs.cfg"
+$sudo cp "$here"/really-responsive-tabs/* "$app/really-responsive-tabs/"
+$sudo chmod -R a+rX "$app/really-responsive-tabs" "$app/really-responsive-tabs.cfg" "$app/defaults/pref/autoconfig.js"
 
-echo "Installed into $app. Restart the browser; the settings are behind the new toolbar button or Tools > Auto Tab Orientation."
+echo "Installed into $app. Restart the browser; the settings are behind the new toolbar button or Tools > Really Responsive Tabs."

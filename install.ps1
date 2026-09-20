@@ -1,4 +1,4 @@
-# Installs Auto Tab Orientation into a Firefox-family install on Windows.
+# Installs Really Responsive Tabs into a Firefox-family install on Windows.
 # Run from an elevated PowerShell:  .\install.ps1 ["C:\Program Files\Mozilla Firefox"]
 param([string]$App)
 $ErrorActionPreference = "Stop"
@@ -20,13 +20,13 @@ if (-not $App) {
 if (-not (Test-Path (Join-Path $App "omni.ja"))) { throw "$App does not look like an application directory (no omni.ja)." }
 
 $loader = Join-Path $App "defaults\pref\autoconfig.js"
-if ((Test-Path $loader) -and -not (Select-String -Quiet "auto-tab-orientation.cfg" $loader)) {
+if ((Test-Path $loader) -and -not (Select-String -Quiet "really-responsive-tabs.cfg" $loader)) {
   throw "There is already an autoconfig loader at $loader pointing somewhere else. See README, section 'Already using autoconfig'."
 }
 
 New-Item -ItemType Directory -Force (Join-Path $App "defaults\pref") | Out-Null
-New-Item -ItemType Directory -Force (Join-Path $App "auto-tab-orientation") | Out-Null
+New-Item -ItemType Directory -Force (Join-Path $App "really-responsive-tabs") | Out-Null
 Copy-Item (Join-Path $here "autoconfig.js") $loader -Force
-Copy-Item (Join-Path $here "auto-tab-orientation.cfg") (Join-Path $App "auto-tab-orientation.cfg") -Force
-Copy-Item (Join-Path $here "auto-tab-orientation\*") (Join-Path $App "auto-tab-orientation") -Force
-Write-Host "Installed into $App. Restart the browser; the settings are behind the new toolbar button or Tools > Auto Tab Orientation."
+Copy-Item (Join-Path $here "really-responsive-tabs.cfg") (Join-Path $App "really-responsive-tabs.cfg") -Force
+Copy-Item (Join-Path $here "really-responsive-tabs\*") (Join-Path $App "really-responsive-tabs") -Force
+Write-Host "Installed into $App. Restart the browser; the settings are behind the new toolbar button or Tools > Really Responsive Tabs."

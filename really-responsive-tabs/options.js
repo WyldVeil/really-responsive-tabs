@@ -1,4 +1,4 @@
-// Auto Tab Orientation settings page. The API object comes from main.js via
+// Really Responsive Tabs settings page. The API object comes from main.js via
 // window.arguments; this page does no privileged work of its own.
 (function () {
   const $ = (id) => document.getElementById(id);

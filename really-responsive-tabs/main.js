@@ -1,5 +1,5 @@
-// Auto Tab Orientation, main script. Runs once at browser startup with full
-// chrome privileges (loaded by auto-tab-orientation.cfg). It watches every
+// Really Responsive Tabs, main script. Runs once at browser startup with full
+// chrome privileges (loaded by really-responsive-tabs.cfg). It watches every
 // browser window and flips sidebar.verticalTabs to suit the window's size.
 //
 // Two modes:
@@ -16,9 +16,9 @@
 
 const VERSION = "1.0.0";
 const HOMEPAGE = "https://github.com/WyldVeil/really-responsive-tabs";
-const CHROME = "chrome://auto-tab-orientation/content/";
+const CHROME = "chrome://really-responsive-tabs/content/";
 
-const BRANCH = "autoTabOrientation.";
+const BRANCH = "reallyResponsiveTabs.";
 const P = {
   enabled: BRANCH + "enabled",
   mode: BRANCH + "mode",
@@ -31,8 +31,8 @@ const VERTICAL = "sidebar.verticalTabs";
 const REVAMP = "sidebar.revamp";
 
 const BROWSER_URL = "chrome://browser/content/browser.xhtml";
-const BUTTON_ID = "auto-tab-orientation-button";
-const MENU_ID = "auto-tab-orientation-menuitem";
+const BUTTON_ID = "really-responsive-tabs-button";
+const MENU_ID = "really-responsive-tabs-menuitem";
 
 // Register defaults so the prefs show up in about:config with sane values.
 {
@@ -135,7 +135,7 @@ function cui() {
       // try the next one
     }
   }
-  Cu.reportError("auto-tab-orientation: CustomizableUI not found, no toolbar button");
+  Cu.reportError("really-responsive-tabs: CustomizableUI not found, no toolbar button");
   return null;
 }
 
@@ -146,8 +146,8 @@ function ensureWidget() {
   CustomizableUI.createWidget({
     id: BUTTON_ID,
     type: "button",
-    label: "Auto Tab Orientation",
-    tooltiptext: "Auto Tab Orientation settings",
+    label: "Really Responsive Tabs",
+    tooltiptext: "Really Responsive Tabs settings",
     defaultArea: CustomizableUI.AREA_NAVBAR,
     onCommand(event) {
       openOptions(event.target.ownerGlobal);
@@ -176,7 +176,7 @@ try {
   const uri = Services.io.newURI("data:text/css;charset=utf-8," + encodeURIComponent(STYLE));
   if (!sss.sheetRegistered(uri, sss.AUTHOR_SHEET)) sss.loadAndRegisterSheet(uri, sss.AUTHOR_SHEET);
 } catch (e) {
-  Cu.reportError("auto-tab-orientation: stylesheet failed: " + e);
+  Cu.reportError("really-responsive-tabs: stylesheet failed: " + e);
 }
 
 function addMenuItem(win) {
@@ -185,7 +185,7 @@ function addMenuItem(win) {
   if (!popup || doc.getElementById(MENU_ID)) return;
   const item = doc.createXULElement("menuitem");
   item.id = MENU_ID;
-  item.setAttribute("label", "Auto Tab Orientation…");
+  item.setAttribute("label", "Really Responsive Tabs…");
   item.addEventListener("command", () => openOptions(win));
   // On Windows and macOS the Tools menu ends with a separator and Settings;
   // put the entry just above them. On Linux those live in Edit, so append.
@@ -236,12 +236,12 @@ const api = {
 };
 
 function openOptions(win) {
-  const existing = Services.wm.getMostRecentWindow("auto-tab-orientation:options");
+  const existing = Services.wm.getMostRecentWindow("really-responsive-tabs:options");
   if (existing) {
     existing.focus();
     return;
   }
-  win.openDialog(CHROME + "options.html", "auto-tab-orientation-options",
+  win.openDialog(CHROME + "options.html", "really-responsive-tabs-options",
     "chrome,dialog=no,centerscreen,resizable=yes,width=520,height=560", api);
 }
 
@@ -262,7 +262,7 @@ function attach(win) {
     addMenuItem(win);
     updateButton();
   } catch (e) {
-    Cu.reportError("auto-tab-orientation: UI setup failed: " + e);
+    Cu.reportError("really-responsive-tabs: UI setup failed: " + e);
   }
   win.setTimeout(() => apply(win), 500);
 }

@@ -54,7 +54,7 @@ run code that can is Mozilla's autoconfig mechanism, which is what enterprise
 deployments use. So this installs into the browser's application directory,
 not into a profile, and needs admin rights once.
 
-Nothing here touches your profile beyond a handful of `autoTabOrientation.*`
+Nothing here touches your profile beyond a handful of `reallyResponsiveTabs.*`
 preferences.
 
 **Linux and macOS**
@@ -74,7 +74,7 @@ cd really-responsive-tabs
 ```
 
 Restart the browser. The settings are behind the new toolbar button or under
-Tools > Auto Tab Orientation.
+Tools > Really Responsive Tabs.
 
 The application directory is the one containing `omni.ja`: for example
 `/opt/waterfox`, `/usr/lib/firefox`, `C:\Program Files\Mozilla Firefox` or
@@ -91,8 +91,8 @@ reinstall will), run the install script again.
 Firefox loads a single `.cfg` file, named in `defaults/pref/autoconfig.js`.
 If you already have one (fx-autoconfig, a userChrome.js loader, a corporate
 policy file) the installer stops rather than replace it. To use both, copy
-the `auto-tab-orientation/` directory into the application directory and add
-the `try { ... }` block from `auto-tab-orientation.cfg` to the end of your
+the `really-responsive-tabs/` directory into the application directory and add
+the `try { ... }` block from `really-responsive-tabs.cfg` to the end of your
 existing `.cfg`.
 
 ## Uninstall
@@ -104,7 +104,7 @@ existing `.cfg`.
 
 ## Settings reference
 
-All of these live in `about:config` under `autoTabOrientation.` and can be
+All of these live in `about:config` under `reallyResponsiveTabs.` and can be
 edited there as well as in the settings window.
 
 | Preference | Default | Meaning |
@@ -118,8 +118,8 @@ edited there as well as in the settings window.
 
 ## How it works
 
-`auto-tab-orientation.cfg` runs once at startup. It registers the
-`auto-tab-orientation/` directory as `chrome://auto-tab-orientation/` and
+`really-responsive-tabs.cfg` runs once at startup. It registers the
+`really-responsive-tabs/` directory as `chrome://really-responsive-tabs/` and
 loads `main.js`, which listens for resize, maximise and focus events on
 every browser window and sets `sidebar.verticalTabs` to suit. The setting is
 global to the browser, so with several windows open the layout follows the
@@ -131,9 +131,9 @@ dialog is opened.
 
 ```
 autoconfig.js                 -> <app>/defaults/pref/autoconfig.js   tells Firefox to run the .cfg
-auto-tab-orientation.cfg      -> <app>/auto-tab-orientation.cfg      loader
-auto-tab-orientation/main.js  the logic, toolbar button and menu entry
-auto-tab-orientation/options.html, options.js, icon.svg, chrome.manifest
+really-responsive-tabs.cfg      -> <app>/really-responsive-tabs.cfg      loader
+really-responsive-tabs/main.js  the logic, toolbar button and menu entry
+really-responsive-tabs/options.html, options.js, icon.svg, chrome.manifest
 install.sh / uninstall.sh     Linux and macOS
 install.ps1 / uninstall.ps1   Windows
 ```
