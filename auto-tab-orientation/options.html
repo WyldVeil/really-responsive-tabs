@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html windowtype="auto-tab-orientation:options">
+<head>
+<meta charset="utf-8">
+<title>Auto Tab Orientation</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #f9f9fb;
+    --fg: #15141a;
+    --muted: #5b5b66;
+    --card: #ffffff;
+    --border: #cfcfd8;
+    --accent: #0060df;
+    --accent-fg: #ffffff;
+    --ok: #2ac3a2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1b22;
+      --fg: #fbfbfe;
+      --muted: #a9a9b3;
+      --card: #2b2a33;
+      --border: #52525e;
+      --accent: #00ddff;
+      --accent-fg: #15141a;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--fg);
+    font: 13px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  body { padding: 18px 22px 16px; display: flex; flex-direction: column; min-height: 100vh; gap: 12px; }
+  header { display: flex; align-items: center; gap: 12px; }
+  header img { width: 32px; height: 32px; -moz-context-properties: fill; fill: var(--fg); }
+  header h1 { font-size: 17px; font-weight: 600; margin: 0; }
+  header .sub { color: var(--muted); font-size: 12px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
+  .card h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 0 0 8px; }
+  label.row { display: flex; align-items: center; gap: 8px; padding: 4px 0; cursor: pointer; }
+  label.row.radio { align-items: flex-start; }
+  label.row.radio input { margin-top: 3px; }
+  .hint { color: var(--muted); font-size: 12px; }
+  .threshold { display: grid; grid-template-columns: 1fr auto; gap: 8px 12px; align-items: center; margin-top: 6px; }
+  input[type=range] { width: 100%; accent-color: var(--accent); }
+  input[type=number] { width: 64px; padding: 3px 6px; border: 1px solid var(--border); border-radius: 4px;
+    background: var(--bg); color: var(--fg); font: inherit; }
+  .num { display: flex; align-items: center; gap: 6px; }
+  #status { font-variant-numeric: tabular-nums; }
+  #status b { font-weight: 600; }
+  .pill { display: inline-block; padding: 1px 8px; border-radius: 999px; background: var(--accent); color: var(--accent-fg); font-size: 12px; }
+  footer { margin-top: auto; display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 12px; }
+  footer a { color: var(--accent); cursor: pointer; text-decoration: underline; }
+  footer .spacer { flex: 1; }
+  button { padding: 5px 14px; border: 1px solid var(--border); border-radius: 6px; background: var(--card); color: var(--fg); font: inherit; cursor: pointer; }
+  button:hover { border-color: var(--accent); }
+  #error { display: none; color: #e22850; }
+  .disabled { opacity: .5; pointer-events: none; }
+</style>
+</head>
+<body>
+<header>
+  <img src="chrome://auto-tab-orientation/content/icon.svg" alt="">
+  <div>
+    <h1>Auto Tab Orientation</h1>
+    <div class="sub">Switches between vertical and horizontal tabs to suit the window size. Version <span id="version"></span>.</div>
+  </div>
+</header>
+
+<p id="error">Could not reach the browser side of the add-on. Reinstall, or open this page from the toolbar button.</p>
+
+<div class="card">
+  <label class="row"><input type="checkbox" id="enabled"> <b>Enable automatic switching</b></label>
+  <label class="row"><input type="checkbox" id="showButton"> Show the toolbar button</label>
+</div>
+
+<div class="card" id="modeCard">
+  <h2>Mode</h2>
+  <label class="row radio"><input type="radio" name="mode" value="horizontal-when-narrow">
+    <span><b>Vertical tabs, horizontal when the window is narrow</b><br>
+    <span class="hint">For people who normally run vertical tabs. When the window takes up this much of the screen's width or less, tabs go horizontal.</span></span></label>
+  <div class="threshold" id="widthBox">
+    <input type="range" id="widthRange" min="10" max="100" step="1">
+    <span class="num"><input type="number" id="widthPercent" min="1" max="100"> %</span>
+  </div>
+
+  <label class="row radio" style="margin-top:10px"><input type="radio" name="mode" value="vertical-when-short">
+    <span><b>Horizontal tabs, vertical when the window is short</b><br>
+    <span class="hint">For people who normally run horizontal tabs. When the window takes up this much of the screen's height or less, tabs go vertical to free up rows.</span></span></label>
+  <div class="threshold" id="heightBox">
+    <input type="range" id="heightRange" min="10" max="100" step="1">
+    <span class="num"><input type="number" id="heightPercent" min="1" max="100"> %</span>
+  </div>
+
+  <div class="threshold" style="margin-top:12px">
+    <span>Tolerance, so a window snapped to exactly half still counts as half (borders, gaps)</span>
+    <span class="num"><input type="number" id="slack" min="0" max="500"> px</span>
+  </div>
+</div>
+
+<div class="card">
+  <h2>This window</h2>
+  <div id="status">Waiting for the browser window.</div>
+  <div class="hint" style="margin-top:6px">If you flip the orientation by hand it stays that way until the window next crosses the threshold.</div>
+</div>
+
+<footer>
+  <a id="homepage">Project page and source on GitHub</a>
+  <span class="spacer"></span>
+  <button id="reset">Reset to defaults</button>
+  <button id="close">Close</button>
+</footer>
+
+<script src="options.js"></script>
+
+</body>
+</html>
