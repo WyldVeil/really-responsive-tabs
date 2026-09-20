@@ -1,4 +1,5 @@
 # Really Responsive Tabs
+
 Firefox and Waterfox tabs that respond to the window size: vertical tabs when
 the window is wide, horizontal tabs when it is narrow. Switches automatically
 as you resize, snap or maximise the window.
