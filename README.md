@@ -1,5 +1,7 @@
 # Really Responsive Tabs
 
+[![Found it useful? Buy me a coffee](https://img.shields.io/badge/Found_it_useful%3F-Buy_me_a_coffee-FF5E5B?logo=kofi&logoColor=white)](https://ko-fi.com/wyldveil)
+
 Firefox and Waterfox tabs that respond to the window size: vertical tabs when
 the window is wide, horizontal tabs when it is narrow. Switches automatically
 as you resize, snap or maximise the window.
